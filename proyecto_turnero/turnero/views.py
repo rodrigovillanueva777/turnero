@@ -2,27 +2,18 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from .forms import ClienteRegisterForm, LoginForm
 from .models import Cliente
+from django.contrib.auth import authenticate, login
 
 
-
-
-class TurneroListView(View):
-    def get(self,request, *args, **kwargs):
-        posts = Cliente.objects.all()
-        context={
-            'posts' : posts
-        }
-        return render(request, 'turnero_list.html', context)
-    
 class LoginFormView(View):
-    def get(self,request, *args, **kwarg):
+    def get(self,request, *args, **kwargs):
         form = LoginForm()
         context={
             'form':form
         }
         return render(request, 'login.html', context)
     
-    def post(self, request):
+    def post(self,request, *args, **kwargs):
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
             # Autenticar al usuario
@@ -30,7 +21,7 @@ class LoginFormView(View):
             if user is not None:
                 # Iniciar sesión
                 login(request, user)
-                return redirect('registro')  # Redirigir a la página de inicio después del inicio de sesión
+                return redirect('turnero:registro')
         else:
             form = LoginForm(request)
 
@@ -45,6 +36,7 @@ class TurneroRegisterView(View):
             'form':form
         }
         return render(request, 'turnero_register.html', context)
+    
     
     def post(self,request, *args, **kwargs):
         if request.method=="POST":
@@ -61,9 +53,26 @@ class TurneroRegisterView(View):
 
 
         context={
-
+            'form': form
         }
         return render(request, 'turnero_register.html', context)
+
+
+
+
+class TurneroListView(View):
+    def get(self,request, *args, **kwargs):
+        posts = Cliente.objects.all()
+        context={
+            'posts' : posts
+        }
+        return render(request, 'turnero_list.html', context)
+    
+
+
+
+
+
     
 class TurneroOrderView(View):
     def get(self, request, pk, *args, **kwargs):

@@ -1,12 +1,12 @@
 <form method="POST">
-{% csrf_token %}
-Nombre o Razón Social: {{form.nombre}}
-<br>
-C.I. o RUC: {{form.cedula_ruc}}
-<br>
-Nivel de Prioridad: {{form.prioridad}}
-<br>
-Servicio: {{form.servicios}}
-<br>
-<button type="submit">Registrar</button>
+    {% csrf_token %}
+    Nombre o Razón Social: {{form.nombre}}
+    <br>
+    C.I. o RUC: {{form.cedula_ruc}}
+    <br>
+    Nivel de Prioridad: {{form.prioridad}}
+    <br>
+    Servicio: {{form.servicios}}
+    <br>
+    <button type="submit">Registrar</button>
 </form>

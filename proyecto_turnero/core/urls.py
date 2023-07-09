@@ -5,7 +5,7 @@ from .views import HomeView
 urlpatterns = [
     path('admin/', admin.site.urls),
     
-    path('', HomeView.as_view(), name="home"),
+    path('turnero/', HomeView.as_view(), name="home"),
 
-    path('turnero/', include('turnero.urls', namespace='turnero')),
+    path('', include('turnero.urls', namespace='turnero')),
 ]
