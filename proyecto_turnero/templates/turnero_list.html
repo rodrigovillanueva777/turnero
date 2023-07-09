@@ -1,0 +1,7 @@
+turnero list 
+<br>
+{%for cliente in posts%}
+{{cliente.nombre}}
+{%endfor%}
+<br>
+<a href="{% url 'turnero:registro' %}">registro</a>
