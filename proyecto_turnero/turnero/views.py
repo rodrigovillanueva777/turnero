@@ -3,8 +3,6 @@ from django.views.generic import View, UpdateView, DeleteView
 from .forms import ClienteRegisterForm, LoginForm
 from .models import Cliente
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
-
 from django.urls import reverse_lazy
 
 
@@ -63,15 +61,6 @@ class TurneroRegisterView(View):
     
 
 
-
-#class TurneroOrderView(View):
- #   def get(self, request, pk, *args, **kwargs):
-  #      post = get_object_or_404(Cliente,pk=pk)
-   #     context={
-    #        'post':post
-     #   }
-      #  return render(request, 'turnero_order.html', context)
-
 class TurneroOrderView(View):
     def get(self, request):
         clientes_box1 = Cliente.objects.filter(servicios=1, atendido=False).order_by('prioridad', 'fecha_hora')[:7]
@@ -113,38 +102,68 @@ class TurneroListBox1View(View):
             'form': form
         }
         return render(request, 'turnero_listbox1.html', context)
-        #if request.method == "POST":
-         #   form = ClienteRegisterForm(request.POST)
-          #  if form.is_valid():
-           #     atendido = form.cleaned_data.get('atendido')
-
-            #    p, created = Cliente.objects.get_or_create(atendido=atendido)
-             #   p.save()
-
-              #  return redirect('turnero:box1')
-            
-        #context={
-         #   'form': form
-        #}
-        #return render(request, 'turnero_listbox1.html', context)
-
-#def eliminar_cliente(request,id):
-#    cliente=Cliente.objects.get(id=id)
- #   cliente.delete()
- #   return redirect ('turnero:box1')
-
-
-class TurneroUpdateView(UpdateView):
-    model = Cliente
-    fields = ['nombre', 'cedula_ruc','prioridad','servicios']
-    template_name = 'turnero_edit.html'
-
-    def get_success_url(self):
-        pk = self.kwargs['pk']
-        return reverse_lazy('turnero:box1')
     
 
-class TurneroCheckView(UpdateView):
+
+class TurneroListBox2View(View):
+    def get(self,request, *args, **kwargs):
+        clientes_box1 = Cliente.objects.filter(servicios=1).order_by('atendido','prioridad', 'fecha_hora')
+        clientes_box2 = Cliente.objects.filter(servicios=2).order_by('atendido', 'prioridad', 'fecha_hora')
+        clientes_box3 = Cliente.objects.filter(servicios=3).order_by('atendido','prioridad', 'fecha_hora')
+
+        context = {
+            'clientes_box1': clientes_box1,
+            'clientes_box2': clientes_box2,
+            'clientes_box3': clientes_box3
+}
+        return render(request, 'turnero_listbox2.html', context)
+    
+    def post(self,request, *args, **kwargs):
+        if request.method=="POST":
+            form = ClienteRegisterForm(request.POST)
+            if form.is_valid():
+                atendido = form.cleaned_data.get('atendido')
+
+                p, created = Cliente.objects.get_or_create(atendido=atendido)
+                p.save()
+                return redirect('turnero:box2')
+        context={
+            'form': form
+        }
+        return render(request, 'turnero_listbox2.html', context)
+
+
+class TurneroListBox3View(View):
+    def get(self,request, *args, **kwargs):
+        clientes_box1 = Cliente.objects.filter(servicios=1).order_by('atendido','prioridad', 'fecha_hora')
+        clientes_box2 = Cliente.objects.filter(servicios=2).order_by('atendido', 'prioridad', 'fecha_hora')
+        clientes_box3 = Cliente.objects.filter(servicios=3).order_by('atendido','prioridad', 'fecha_hora')
+
+        context = {
+            'clientes_box1': clientes_box1,
+            'clientes_box2': clientes_box2,
+            'clientes_box3': clientes_box3
+}
+        return render(request, 'turnero_listbox3.html', context)
+    
+    def post(self,request, *args, **kwargs):
+        if request.method=="POST":
+            form = ClienteRegisterForm(request.POST)
+            if form.is_valid():
+                atendido = form.cleaned_data.get('atendido')
+
+                p, created = Cliente.objects.get_or_create(atendido=atendido)
+                p.save()
+                return redirect('turnero:box3')
+        context={
+            'form': form
+        }
+        return render(request, 'turnero_listbox3.html', context)
+
+
+
+
+class TurneroCheckView1(UpdateView):
     model = Cliente
     fields = ['atendido']
     template_name = 'turnero_check.html'
@@ -153,8 +172,68 @@ class TurneroCheckView(UpdateView):
         pk = self.kwargs['pk']
         return reverse_lazy('turnero:box1')
     
+class TurneroUpdateView1(UpdateView):
+    model = Cliente
+    fields = ['nombre', 'cedula_ruc','prioridad','servicios']
+    template_name = 'turnero_edit.html'
 
-class TurneroDeleteView(DeleteView):
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('turnero:box1')
+    
+class TurneroDeleteView1(DeleteView):
     model=Cliente
     template_name='turnero_delete.html'
     success_url= reverse_lazy('turnero:box1')
+
+
+
+
+class TurneroCheckView2(UpdateView):
+    model = Cliente
+    fields = ['atendido']
+    template_name = 'turnero_check.html'
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('turnero:box2')
+    
+class TurneroUpdateView2(UpdateView):
+    model = Cliente
+    fields = ['nombre', 'cedula_ruc','prioridad','servicios']
+    template_name = 'turnero_edit.html'
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('turnero:box2')
+    
+class TurneroDeleteView2(DeleteView):
+    model=Cliente
+    template_name='turnero_delete.html'
+    success_url= reverse_lazy('turnero:box2')
+
+
+
+
+class TurneroCheckView3(UpdateView):
+    model = Cliente
+    fields = ['atendido']
+    template_name = 'turnero_check.html'
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('turnero:box3')
+    
+class TurneroUpdateView3(UpdateView):
+    model = Cliente
+    fields = ['nombre', 'cedula_ruc','prioridad','servicios']
+    template_name = 'turnero_edit.html'
+
+    def get_success_url(self):
+        pk = self.kwargs['pk']
+        return reverse_lazy('turnero:box3')
+    
+class TurneroDeleteView3(DeleteView):
+    model=Cliente
+    template_name='turnero_delete.html'
+    success_url= reverse_lazy('turnero:box3')
