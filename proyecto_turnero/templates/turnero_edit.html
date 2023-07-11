@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>BOX 1</title>
+        <title>EDICION</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
         rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
         <meta name="description" content="">
@@ -29,11 +29,11 @@
                     <a class="nav-link" href="{% url 'turnero:orden' %}">Orden</a>
                   </li>
                   <li class="nav-item dropdown">
-                    <a class="nav-link active dropdown-toggle" aria-current="page"  href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle"  href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Servicios
                     </a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item active" aria-current="page" href="{% url 'turnero:box1' %}">Box 1</a></li>
+                      <li><a class="dropdown-item" href="{% url 'turnero:box1' %}">Box 1</a></li>
                       <li><a class="dropdown-item" href="#">Box 2</a></li>
                       <li><a class="dropdown-item" href="#">Box 3</a></li>
                     </ul>
@@ -43,59 +43,46 @@
             </div>
           </nav>
           
-          <div class="container py-20 order-md-1">
+          <div class="container py order-1 -4 order-md-1">
             <div class="row">
-              <h1>SERVICIOS</h1>
-              <div class="col-md-12 order-1 order-md-2">
-                <ul class="list-group">
-                  <h2>BOX 1</h2>
-                  <li class="list-group-item">
-                    <div class="row">
-                      <div class="col-md-2">
-                        <strong>Turno:</strong>
-                      </div>
-                      <div class="col-md-2">
-                        <strong>Nombre:</strong>
-                      </div>
-                      <div class="col-md-2">
-                        <strong>C.I. o RUC:</strong>
-                      </div>
-                      <div class="col-md-2">
-                        <strong>Prioridad:</strong>
-                      </div>
+                <h1>EDICION</h1>
+                <div class="col-md-4 order-2 order-md-2">
+                    <h2>CLIENTE</h2>
+                    <div class="card">
+                        <div class="card">
+                            <div class="card-body">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="id_nombre">Nombre o Razón Social:</label>
+                                        <br>
+                                        {{ form.nombre }}
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id_cedula_ruc">C.I. o RUC:</label>
+                                        <br>
+                                        {{ form.cedula_ruc }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id_prioridad">Nivel de Prioridad:</label>
+                                        <br>
+                                        {{ form.prioridad }}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id_servicios">Servicio:</label>
+                                        <br>
+                                        {{ form.servicios }}
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-success btn-block text-white">Registrar</button>
+                                </form>
+                            </div>
+                        </div>                        
                     </div>
-                  </li>
-                  {% for cliente in clientes_box1 %}
-                  <li class="list-group-item">
-                    <div class="row">
-                      <div class="col-md-2">
-                        {{ forloop.counter }}
-                      </div>
-                      <div class="col-md-2">
-                        {{ cliente.nombre }}
-                      </div>
-                      <div class="col-md-2">
-                        {{ cliente.cedula_ruc }}
-                      </div>
-                      <div class="col-md-2">
-                        {{ cliente.prioridad }}
-                      </div>
-                      <div class="col-md-1">
-                        <a href="{% url 'turnero:atendido' cliente.pk %}" class="btn btn-sm btn-block btn-success text-white">Atendido</a>
-                      </div>
-                      <div class="col-md-1">
-                        <a href="{% url 'turnero:editar' cliente.pk %}" class="btn btn-sm btn-block btn-primary text-white">Editar</a>
-                      </div>
-                      <div class="col-md-1">
-                        <a href="{% url 'turnero:eliminar' cliente.pk %}" class="btn btn-sm btn-block btn-danger text-white">Eliminar</a>
-                      </div>
-                    </div>
-                  </li>
-                  {% endfor %}
-                </ul>
-              </div>
+                </div>
             </div>
-          </div>
+        </div>
         
         <script src="" async defer></script>
         <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1/dist/es-module-shims.min.js" crossorigin="anonymous"></script>
@@ -112,7 +99,5 @@
     
           new bootstrap.Popover(document.getElementById('popoverButton'))
         </script>
-        
     </body>
 </html>
-
