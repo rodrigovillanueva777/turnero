@@ -8,4 +8,7 @@ class ClienteAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'cedula_ruc','prioridad', 'fecha_hora', 'servicios','turno','atendido')
     list_editable = ('atendido',)
     search_fields = ('nombre', 'cedula_ruc','turno','prioridad', 'fecha_hora', 'servicios','atendido')
+    list_filter = ('prioridad','servicios','atendido')
+    list_per_page = 20
+
     pass
